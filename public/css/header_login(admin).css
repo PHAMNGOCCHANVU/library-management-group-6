@@ -14,6 +14,13 @@
   display: flex;
   align-items: center;
   gap: 15px;
+  text-decoration: none;  
+  color: inherit;         
+  cursor: pointer;        
+}
+
+.logo:hover {
+  opacity: 0.9;           
 }
 
 .logo-icon {
@@ -31,7 +38,7 @@
 
 .logo-text {
   color: #660095;
-  font-family: System serif, serif;
+  font-family: "System serif", serif;
   font-size: 22px;
   text-transform: uppercase;
   font-weight: 700;
@@ -62,12 +69,17 @@
   order: -1; 
 }
 
+
+/*các nút trên header*/
 .buttons {
   display: flex;
   gap: 15px;
 }
 
 .btn {
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
   height: 50px;
   padding: 0 20px;
   border-radius: 15px;
@@ -75,6 +87,9 @@
   font-weight: 700;
   cursor: pointer;
   border: none;
+  text-decoration: none; 
+  color: inherit; 
+  transition: background 0.2s ease;
 }
 
 .btn.admin {
@@ -84,9 +99,15 @@
 
 .btn.login {
   background: #d9d9d9;
+  color: #333;
 }
 
 .btn.signup {
   background: #5a33e9;
   color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
