@@ -281,9 +281,6 @@ body {
   margin-left: 10px;
 }
 
-
-
-
 /* Bảng danh mục */
 .table-wrapper {
   width: 1155px;
@@ -299,6 +296,7 @@ body {
 }
 
 .category-table {
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse; 
   font-size: 15px;
@@ -315,7 +313,10 @@ body {
   z-index: 2;      
 }
 
-.category-table th, .category-table td {
+.category-table th, 
+.category-table td {
+  word-wrap: break-word; 
+  white-space: normal;
   text-align: left;
   padding: 14px 16px;
 }
@@ -335,6 +336,7 @@ body {
   border-top: none;  
 }
 
+
 .category-table tbody tr{
   border-bottom: 1px solid #d1d1d1; 
 }
@@ -343,7 +345,11 @@ body {
   border-bottom: none; 
 }
 
-
+.category-table th:last-child,
+.category-table td:last-child {
+  padding-right: 30px; 
+  text-align: center;  
+}
 
 
 
@@ -351,6 +357,7 @@ body {
   display: flex;
   gap: 12px;
   font-size: 18px;
+  margin-left: 75px;
 }
 
 /* 2 nút edit, delete */

@@ -322,6 +322,7 @@ body {
 }
 
 .book-table {
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse; 
   font-size: 15px;
@@ -338,7 +339,10 @@ body {
   z-index: 2; 
 }
 
-.book-table th, .book-table td {
+.book-table th, 
+.book-table td {
+  word-wrap: break-word; 
+  white-space: normal;   
   text-align: left;
   padding: 14px 16px;
 }
@@ -366,11 +370,17 @@ body {
   border-bottom: none;
 }
 
+.book-table td:nth-last-child(-n+2),
+.book-table th:nth-last-child(-n+2) {
+  text-align: center;
+  vertical-align: middle;
+}
 
 .actions {
   display: flex;
   gap: 12px;
   font-size: 18px;
+  margin-left: 40px;
 }
 
 /* 2 nút edit, delete */
