@@ -8,6 +8,27 @@
   justify-content: space-between;
   padding: 0 25px;
   box-sizing: border-box;
+  z-index: 2;
+  font-family: Inter, sans-serif;
+}
+
+.max-header {
+  width: 100%;
+  display: flex;
+}
+.header-left,
+.header-right {
+  height: 119px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.header-left {
+  width: 75%;
+}
+.header-right {
+  width: 25%;
+  justify-content: right;
 }
 
 .logo {
@@ -44,11 +65,15 @@
   font-weight: 700;
   line-height: 19.6px;
   text-align: center;
+  width: 110px;
 }
 
 .nav {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   gap: 40px;
+  padding-left: 20px; 
 }
 
 .nav a {
@@ -86,24 +111,27 @@
 }
 
 .btn {
-  display: inline-flex; 
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 50px;
-  padding: 0 20px;
-  border-radius: 15px;
+  padding: 0 18px;        /* tăng độ rộng đẹp hơn */
+  border-radius: 15px;    /* bo tròn mềm mại hơn */
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
   border: none;
-  text-decoration: none; 
-  color: inherit; 
-  transition: background 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  white-space: nowrap;    /* CHỐT: giúp chữ không xuống dòng */
+  transition: all 0.2s ease;
 }
+
 
 .btn.admin {
   background: #fd9535;
   color: white;
+  
 }
 
 .btn.login {
