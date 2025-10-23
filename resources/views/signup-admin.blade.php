@@ -26,7 +26,7 @@
         Tạo tài khoản quản trị viên mới để quản lý hệ thống
       </p>
 
-      <form class="login-form" action="{{ url('/admin/signup') }}" method="POST">
+      <form class="login-form" action="{{ url('signup-successful-admin') }}">
         @csrf
         <label for="fullname">Họ và tên</label>
         <div class="input-box">

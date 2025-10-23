@@ -33,3 +33,7 @@ Route::get('/homepage-admin', function () {
 Route::get('/signup-admin', function () {
     return view('signup-admin');
 });
+
+Route::get('/signup-successful-admin', function () {
+    return view('signup-successful-admin');
+});
