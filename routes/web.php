@@ -17,3 +17,7 @@ Route::get('/login-admin', function () {
 Route::get('/login-user', function () {
     return view('login-user');
 });
+
+Route::get('/signup-user', function () {
+    return view('signup-user');
+});
