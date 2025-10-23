@@ -31,7 +31,6 @@
   justify-content: right;
 }
 
-
 .logo {
   display: flex;
   align-items: center;
@@ -207,14 +206,17 @@
   background: #f0ebff;
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 22px;
+
+  padding-top: 32px;
+  padding-bottom: 32px;
   gap: 10px;
 }
 
 .popup-header h3 {
   font-size: 20px;
   display: block; 
-  margin-bottom: 2px; 
+  margin-bottom: 4px; 
 }
 
 .popup-header p {
@@ -258,6 +260,9 @@
   padding: 15px;
   cursor: pointer;
   border-bottom: 1px solid #eee;
+
+  padding-top: 22px;
+  padding-bottom: 22px;
 }
 
 .popup-item:hover {
