@@ -29,3 +29,7 @@ Route::get('/signup-successful-user', function () {
 Route::get('/homepage-admin', function () {
     return view('homepage-admin');
 });
+
+Route::get('/signup-admin', function () {
+    return view('signup-admin');
+});
