@@ -13,3 +13,7 @@ Route::get('/homepage-login-user', function () {
 Route::get('/login-admin', function () {
     return view('login-admin');
 });
+
+Route::get('/login-user', function () {
+    return view('login-user');
+});
