@@ -117,34 +117,35 @@
       <h3 class="book-title">Nhà giả kim</h3>
       <p class="book-author">Tác giả: Paulo Coelho</p>
     </div>
-
+    
     <div class="book-card">
-      <div class="book-img">
-        <img src="{{ asset('images/toithayhoavangtrencoxanh-bia.jpg') }}" alt="Tôi thấy hoa vàng trên cỏ xanh">
-      </div>
-      <div class="book-tag">Văn học</div>
-      <h3 class="book-title">Tôi thấy hoa vàng trên cỏ xanh</h3>
-      <p class="book-author">Tác giả: Nguyễn Nhật Ánh</p>
-    </div>
+          <div class="book-img">
+            <img src="{{ asset('images/toithayhoavangtrencoxanh-bia.jpg') }}" alt="Tôi thấy hoa vàng trên cỏ xanh">
+          </div>
+          <div class="book-tag">Văn học</div>
+          <h3 class="book-title">Tôi thấy hoa vàng trên cỏ xanh</h3>
+          <p class="book-author">Tác giả: Nguyễn Nhật Ánh</p>
+        </div>
 
-    <div class="book-card">
-      <div class="book-img">
-        <img src="{{ asset('images/atomichabits-bia.webp') }}" alt="Atomic Habits">
-      </div>
-      <div class="book-tag purple">Phát triển bản thân</div>
-      <h3 class="book-title">Atomic Habits</h3>
-      <p class="book-author">Tác giả: James Clear</p>
-    </div>
+        <div class="book-card">
+          <div class="book-img">
+            <img src="{{ asset('images/atomichabits-bia.webp') }}" alt="Atomic Habits">
+          </div>
+          <div class="book-tag purple">Phát triển bản thân</div>
+          <h3 class="book-title">Atomic Habits</h3>
+          <p class="book-author">Tác giả: James Clear</p>
+        </div>
 
-    <div class="book-card">
-      <div class="book-img">
-        <img src="{{ asset('images/matbiec-bia.jpg') }}" alt="Mắt biếc">
+        <div class="book-card">
+          <div class="book-img">
+            <img src="{{ asset('images/matbiec-bia.jpg') }}" alt="Mắt biếc">
+          </div>
+          <div class="book-tag">Văn học</div>
+          <div class="book-status">Có sẵn</div>
+          <h3 class="book-title">Mắt biếc</h3>
+          <p class="book-author">Tác giả: Nguyễn Nhật Ánh</p>
+        </div>
       </div>
-      <div class="book-tag">Văn học</div>
-      <div class="book-status">Có sẵn</div>
-      <h3 class="book-title">Mắt biếc</h3>
-      <p class="book-author">Tác giả: Nguyễn Nhật Ánh</p>
-    </div>
   </div>
 </section>
 
