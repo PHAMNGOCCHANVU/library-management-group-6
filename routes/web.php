@@ -61,3 +61,7 @@ Route::get('admin/borrow-return-management-admin', function () {
 Route::get('admin/finemoney-management-admin', function () {
     return view('admin.finemoney-management-admin');
 });
+
+Route::get('user/homepage-user', function () {
+    return view('user.homepage-user');
+});
