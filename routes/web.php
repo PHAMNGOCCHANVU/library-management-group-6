@@ -70,3 +70,7 @@ Route::get('user/info-user', function () {
     return view('user.info-user');
 });
 
+Route::get('user/setting-user', function () {
+    return view('user.setting-user');
+});
+
