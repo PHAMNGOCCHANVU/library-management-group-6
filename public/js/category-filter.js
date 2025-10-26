@@ -1,19 +1,21 @@
-const tableRows = document.querySelectorAll('.category-table tbody tr');
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.querySelector('#searchCategory'); 
+  const tableBody = document.querySelector('.category-table tbody');
 
-const searchInput = document.querySelector('.search-box input');
+  if (!searchInput || !tableBody) return;
 
-function filterCategories() {
-  const keyword = searchInput.value.trim().toLowerCase();
+  function filterCategories() {
+    const keyword = searchInput.value.trim().toLowerCase();
+    const tableRows = tableBody.querySelectorAll('tr');
 
-  tableRows.forEach(row => {
-    const tenDanhMuc = row.cells[1].textContent.trim().toLowerCase(); // Cột TÊN DANH MỤC (cột 1)
+    tableRows.forEach(row => {
+      const tenDanhMucCell = row.cells[1]; 
+      if (!tenDanhMucCell) return;
 
-    if (tenDanhMuc.includes(keyword)) {
-      row.style.display = ""; 
-    } else {
-      row.style.display = "none"; 
-    }
-  });
-}
+      const tenDanhMuc = tenDanhMucCell.textContent.trim().toLowerCase();
+      row.style.display = tenDanhMuc.includes(keyword) ? '' : 'none';
+    });
+  }
 
-searchInput.addEventListener('input', filterCategories);
+  searchInput.addEventListener('input', filterCategories);
+});

@@ -63,5 +63,11 @@
         <a href="{{ url('/admin/homepage-admin') }}" class="home">Trang chủ</a>
       </div>
     </header>
+  @yield('content')
   
-    
+
+  </main>
+</div>
+@yield('scripts')
+</body>
+</html>

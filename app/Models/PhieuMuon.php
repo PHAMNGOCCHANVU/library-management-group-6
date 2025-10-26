@@ -1,0 +1,19 @@
+<?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class PhieuMuon extends Model
+{
+    protected $table = 'phieu_muon';
+    protected $primaryKey = 'idPhieuMuon';
+
+    public function nguoiDung()
+    {
+        return $this->belongsTo(NguoiDung::class, 'idNguoiDung', 'idNguoiDung');
+    }
+
+    public function chiTiets()
+    {
+        return $this->hasMany(PhieuMuonChiTiet::class, 'idPhieuMuon', 'idPhieuMuon');
+    }
+}

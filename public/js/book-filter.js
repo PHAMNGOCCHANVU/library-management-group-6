@@ -1,47 +1,43 @@
+// book-filter.js
+
+// Lấy các phần tử
 const filterSelect = document.querySelector('.filter-dropdown select');
-const tableRows = document.querySelectorAll('.book-table tbody tr');
-
-filterSelect.addEventListener('change', function() {
-  const selectedValue = this.value.trim();
-
-  tableRows.forEach(row => {
-    const categoryCell = row.cells[3].textContent.trim(); 
-
-    if (selectedValue === "Tất cả thể loại" || selectedValue === "") {
-      row.style.display = "";
-    } else {
-      if (categoryCell === selectedValue) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
-    }
-  });
-});
-
 const searchInput = document.querySelector('.search-box input');
+let tableRows = document.querySelectorAll('.book-table tbody tr');
 
+// Hàm lọc sách
 function filterBooks() {
-  const selectedCategory = filterSelect.value.trim().toLowerCase();
+  const selectedCategory = filterSelect.value.trim(); // là idDanhMuc
   const keyword = searchInput.value.trim().toLowerCase();
 
   tableRows.forEach(row => {
-    const maSach = row.cells[0].textContent.trim().toLowerCase();
-    const tenSach = row.cells[1].textContent.trim().toLowerCase();
-    const tacGia = row.cells[2].textContent.trim().toLowerCase();
-    const theLoai = row.cells[3].textContent.trim().toLowerCase();
+    const cells = row.cells;
+    if (!cells || cells.length < 5) return;
 
-    const matchCategory = (selectedCategory === "tất cả thể loại".toLowerCase() || selectedCategory === "" || theLoai === selectedCategory);
+    const maSach = cells[0].textContent.trim().toLowerCase();
+    const tenSach = cells[1].textContent.trim().toLowerCase();
+    const tacGia = cells[2].textContent.trim().toLowerCase();
+    const categoryId = cells[3].dataset.id ? cells[3].dataset.id.trim() : '';
+
+    const matchCategory = (selectedCategory === "" || categoryId === selectedCategory);
     const matchKeyword = (maSach.includes(keyword) || tenSach.includes(keyword) || tacGia.includes(keyword));
 
-    if (matchCategory && matchKeyword) {
-      row.style.display = "";
-    } else {
-      row.style.display = "none";
-    }
+    row.style.display = (matchCategory && matchKeyword) ? "" : "none";
   });
 }
 
-filterSelect.addEventListener('change', filterBooks);
-searchInput.addEventListener('input', filterBooks);
+// Lắng nghe thay đổi dropdown và input search
+if (filterSelect) filterSelect.addEventListener('change', filterBooks);
+if (searchInput) searchInput.addEventListener('input', filterBooks);
 
+// Hàm cập nhật tableRows khi thêm/sửa/xóa
+function updateTableRows() {
+  tableRows = document.querySelectorAll('.book-table tbody tr');
+  filterBooks();
+}
+
+// Xuất ra để các file khác gọi nếu cần
+window.updateTableRows = updateTableRows;
+
+// Chạy lọc lần đầu khi load
+filterBooks();

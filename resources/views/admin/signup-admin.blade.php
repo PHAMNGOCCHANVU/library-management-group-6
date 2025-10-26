@@ -26,11 +26,12 @@
         Tạo tài khoản quản trị viên mới để quản lý hệ thống
       </p>
 
-      <form class="login-form" action="{{ url('/admin/signup-successful-admin') }}">
+      <form class="login-form" action="{{ route('admin.signup.submit') }}" method="POST">
         @csrf
+
         <label for="fullname">Họ và tên</label>
         <div class="input-box">
-          <input type="text" name="fullname" id="fullname" placeholder="Nhập họ và tên" required />
+          <input type="text" name="hoTen" id="fullname" placeholder="Nhập họ và tên" required />
         </div>
 
         <label for="email">Email</label>
@@ -40,18 +41,18 @@
 
         <label for="phone">Số điện thoại</label>
         <div class="input-box">
-          <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" />
+          <input type="text" name="soDienThoai" id="phone" placeholder="Nhập số điện thoại" />
         </div>
 
         <label for="address">Địa chỉ</label>
         <div class="input-box">
-          <input type="text" name="address" id="address" placeholder="Nhập địa chỉ" />
+          <input type="text" name="diaChi" id="address" placeholder="Nhập địa chỉ" />
         </div>
 
         <label for="password">Mật khẩu</label>
         <div class="input-box">
           <div class="password-wrapper">
-            <input type="password" name="password" id="password" placeholder="Nhập mật khẩu" required />
+            <input type="password" name="matKhau" id="password" placeholder="Nhập mật khẩu" required />
             <button type="button" class="pwd-toggle" aria-label="Hiện/ẩn mật khẩu">
               {{-- SVG Icon --}}
             </button>
@@ -61,7 +62,7 @@
         <label for="confirm-password">Xác nhận mật khẩu</label>
         <div class="input-box">
           <div class="password-wrapper">
-            <input type="password" name="password_confirmation" id="confirm-password" placeholder="Nhập lại mật khẩu" required />
+            <input type="password" name="matKhau_confirmation" id="confirm-password" placeholder="Nhập lại mật khẩu" required />
             <button type="button" class="pwd-toggle" aria-label="Hiện/ẩn mật khẩu">
               {{-- SVG Icon --}}
             </button>

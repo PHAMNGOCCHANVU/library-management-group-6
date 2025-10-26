@@ -12,9 +12,17 @@
         Đăng nhập vào tài khoản quản trị viên của bạn để quản lý hệ thống
     </p>
 
-    <form class="login-form" action="{{ url('/admin/homepage-admin') }}">
+    <form class="login-form" method="POST" action="{{ route('admin.login.submit') }}">
+        {{-- 🔹 CSRF bảo mật --}}
         @csrf
         
+        {{-- 🔹 Hiển thị thông báo lỗi (nếu có) --}}
+        @if($errors->any())
+            <div class="alert alert-danger" style="color:red; margin-bottom:10px;">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
         <label for="email">Email</label>
         <div class="input-box">
             <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required />
@@ -26,7 +34,7 @@
                 <input
                     type="password"
                     id="password"
-                    name="password"
+                    name="matKhau"
                     placeholder="Nhập mật khẩu"
                     required
                 />
@@ -40,8 +48,11 @@
             </div>
         </div>
 
+        {{-- 🔹 Nút gửi form --}}
         <button type="submit" class="btn-login">Đăng nhập</button>
     </form>
 </main>
 
 @include('admin.layouts.footer-homepage-admin')
+
+<script src="{{ asset('js/password-toggle.js') }}"></script>

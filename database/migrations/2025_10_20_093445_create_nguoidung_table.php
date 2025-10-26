@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB; 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->string('soDienThoai', 20)->nullable()->index();
             $table->string('diaChi', 255)->nullable();
             $table->string('vaiTro', 20)->default('reader');
-            $table->date('ngayDangKy')->default(DB::raw('CURRENT_DATE'));
+            $table->date('ngayDangKy')->default(DB::raw('CURRENT_DATE()'));
             $table->boolean('trangThai')->default(1);
             $table->timestamps();
         });

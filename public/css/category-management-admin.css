@@ -76,7 +76,7 @@ body {
   border-radius: 12px;
   padding: 35px 40px;
   display: none;
-  z-index: 1000;
+  z-index: 10000;
   box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 
@@ -347,8 +347,17 @@ body {
 
 .category-table th:last-child,
 .category-table td:last-child {
-  padding-right: 30px; 
+  padding-right: 50px; 
   text-align: center;  
+  margin-left: 120px;
+}
+
+.category-table th:first-child {
+  width: 150px; 
+}
+
+.category-table th:nth-child(2) {
+  width: 220px; 
 }
 
 
