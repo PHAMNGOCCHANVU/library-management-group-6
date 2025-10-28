@@ -150,7 +150,7 @@
 
 
       /* nút logout */
-      .popup-item.logout {
+      .popup-item.logout-ee{
         display: flex;
         align-items: center;
         gap: 15px;
@@ -160,17 +160,17 @@
         padding-top: 22px;
         padding-bottom: 22px;
         border-color: #ffffffff;
+        background-color: #fecdcdff;
         width: 100%;
-
       }
 
-      .popup-item.logout .icon-popup img {
+      .popup-item.logout-ee .icon-popup img {
         width: 32px;
         height: 32px;
         object-fit: contain;
       }
 
-      .popup-item.logout strong {
+      .popup-item.logout-ee strong {
         color: red;
         font-size: 18px;
         font-weight: 700;
@@ -178,13 +178,13 @@
         margin-bottom: 2px;
       }
 
-      .popup-item.logout p {
+      .popup-item.logout-ee p {
         color: red;
         margin-top: 2px;
         font-size: 14px;
       }
 
-      .popup-item.logout:hover {
+      .popup-item.logout-ee:hover {
         background-color: #ffe1e1ff;
         transform: translateY(-1px);
       }

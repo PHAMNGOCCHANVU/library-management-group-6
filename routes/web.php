@@ -106,14 +106,17 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 use App\Http\Controllers\Admin\FineMoneyController;
 
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function() {
     Route::get('/finemoney-management-admin', [FineMoneyController::class, 'index'])
-        ->name('admin.fine.index');
+        ->name('admin.finemoney.index');
 
-    Route::post('/fine/{id}/toggle-status', [FineMoneyController::class, 'toggleStatus'])
-        ->name('admin.fine.toggleStatus');
+    Route::post('/fines/{id}/update-status', [FineMoneyController::class, 'approveFine'])
+        ->name('admin.fines.approve');
+
+    Route::post('/fines/{id}/reject', [FineMoneyController::class, 'rejectFine'])
+        ->name('admin.fines.reject');
 });
+
 
 use App\Http\Controllers\HomepageLoginController;
 
@@ -208,3 +211,36 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/content-tratre-lsmn', [TrangLichSuMuonTraController::class, 'contentTraTre']);
     Route::get('/content-datcho', [TrangLichSuMuonTraController::class, 'contentDatCho']);
 });
+
+
+use App\Http\Controllers\User\UserInfoController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/info-user', [UserInfoController::class, 'show'])
+        ->name('user.info-user');
+    Route::post('/user/info/update', [UserInfoController::class, 'update'])
+        ->name('user.info.update');
+});
+
+
+use App\Http\Controllers\User\UserSettingController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/setting-user', [UserSettingController::class, 'showChangePasswordForm'])
+        ->name('user.setting-user');
+
+    Route::post('/user/setting-user/change-password', [UserSettingController::class, 'changePassword'])
+        ->name('user.setting-user.change-password');
+});
+
+
+use App\Http\Controllers\User\ThanhToanController;
+
+Route::prefix('user')->middleware(['auth'])->group(function () {
+    Route::get('trangphat', [ThanhToanController::class, 'index'])->name('user.trangphat');
+    Route::get('content-trangphat', [ThanhToanController::class, 'contentThanhToan'])->name('user.content-trangphat');
+
+    Route::post('xac-nhan-thanh-toan', [ThanhToanController::class, 'xacNhanThanhToan'])
+        ->name('user.xac-nhan-thanh-toan');
+});
+

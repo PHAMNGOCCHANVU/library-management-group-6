@@ -13,6 +13,8 @@ use App\Models\PhieuMuon;
 use App\Models\PhieuMuonChiTiet;
 use App\Models\DatCho;
 use App\Models\NguoiDung;
+use Illuminate\Support\Facades\Log;
+
 
 class BorrowController extends Controller
 {
@@ -98,15 +100,63 @@ class BorrowController extends Controller
 
         $chiTiet = PhieuMuonChiTiet::where('idPhieuMuonChiTiet', $idChiTiet)
             ->whereHas('phieuMuon', fn($q) => $q->where('idNguoiDung', $user->idNguoiDung))
+            ->with('sach')
             ->first();
 
         if (!$chiTiet) {
             return response()->json(['message' => 'Không tìm thấy sách cần trả.'], 404);
         }
 
-        $chiTiet->trangThaiCT = 'pending';
-        $chiTiet->ghiChu = 'return';
-        $chiTiet->save();
+        $returnDate = now();
+        $dueDate = Carbon::parse($chiTiet->due_date);
+        $borrowDate = Carbon::parse($chiTiet->borrow_date);
+
+        /**
+         * 🔥 Kiểm tra trễ hạn → Tạo phiếu phạt
+         */
+        if ($returnDate->gt($dueDate)) {
+            $soNgayTre = $dueDate->diffInDays($returnDate);
+            $tongSoNgayMuon = $borrowDate->diffInDays($returnDate);
+            $soTienPhat = $soNgayTre * 5000;
+
+            $phat = \App\Models\Phat::create([
+                'idPhieuMuonChiTiet' => $chiTiet->idPhieuMuonChiTiet,
+                'idNguoiDung' => $user->idNguoiDung,
+                'soNgayTre' => $soNgayTre,
+                'soTienPhat' => $soTienPhat,
+                'trangThaiThanhToan' => 'pending',
+                'ghiChu' => "Mượn {$tongSoNgayMuon} ngày, trễ {$soNgayTre} ngày khi trả sách {$chiTiet->sach->tenSach}."
+            ]);
+
+            Log::info("📘 Tạo phiếu phạt thành công:", $phat->toArray());
+
+            ThongBao::create([
+                'idNguoiDung' => $user->idNguoiDung,
+                'idSach' => $chiTiet->idSach,
+                'loaiThongBao' => "Phạt trễ hạn",
+                'noiDung' => "Bạn bị phạt {$soTienPhat} VNĐ vì trả sách '{$chiTiet->sach->tenSach}' trễ {$soNgayTre} ngày.",
+                'thoiGianGui' => now(),
+                'trangThai' => 'unread'
+            ]);
+        }
+
+
+        $chiTiet->update([
+            'trangThaiCT' => 'pending',
+            'ghiChu' => 'return',
+            'return_date' => $returnDate,
+        ]);
+
+        $phieuTra = \App\Models\PhieuTra::updateOrCreate(
+            ['idPhieuMuon' => $chiTiet->idPhieuMuon],
+            [
+                'idNguoiDung' => $user->idNguoiDung,
+                'ngayTra' => $returnDate,
+                'trangThai' => 'pending',
+                'ghiChu' => "Phiếu trả sách {$chiTiet->sach->tenSach} của {$user->hoTen}",
+                'updated_at' => now(),
+            ]
+        );
 
         ThongBao::create([
             'idNguoiDung' => $user->idNguoiDung,
@@ -120,6 +170,8 @@ class BorrowController extends Controller
 
         return response()->json(['message' => 'Yêu cầu trả sách đã được gửi, vui lòng chờ quản trị viên duyệt.']);
     }
+
+
 
     // Nội dung tab Đặt chỗ (AJAX)
     public function contentDatCho()

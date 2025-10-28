@@ -23,7 +23,7 @@ body {
 }
 
 
-.dashboard-header {
+.dashboard-header-fine {
   display: flex;
   flex-direction: column; 
   align-items: flex-start;
@@ -164,9 +164,10 @@ body {
   margin-left: 40px;
 }
 
-.icon-tick {
+.icon-tick-fine {
   stroke: #008000; 
   cursor: pointer;
+  margin-left: 21px;
 }
 
 .icon-x {

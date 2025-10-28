@@ -36,7 +36,6 @@
     <div class="rectangle">
         <div class="group-2-choosen">
             <div class="div">
-                {{-- ✅ Đổi đường dẫn sang route Laravel (thay vì .html) --}}
                 <a class="group-6" href="{{ url('user/content-tratre-lsmn') }}">
                     <div class="rectangle-6">
                         <div class="text-wrapper-5">Lịch sử mượn trả</div>
@@ -58,7 +57,6 @@
 
         <div class="can-giua-group-chon-lenh">
             <div class="group-chon-lenh">
-                {{-- ✅ Các liên kết thay bằng URL route --}}
                 <a class="group-8" href="{{ url('user/content-all-lsmn') }}">
                     <div class="rectangle-15"></div>
                     <div class="text-wrapper-31">Tất cả</div>
@@ -84,13 +82,21 @@
 
                 @forelse ($muonChiTiets as $chiTiet)
                 @php
-                $dueDate = \Carbon\Carbon::parse($chiTiet->phieuMuon->hanTra ?? $chiTiet->due_date);
-                $today = \Carbon\Carbon::today();
-                $isLate = ($chiTiet->trangThaiCT === 'borrowed') && $today->gt($dueDate);
-                $phat = $chiTiet->phieuMuon->phats?->sum('soTienPhat') ?? 0;
+                $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
+                $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
+
+                $isReturnedLate = (
+                $chiTiet->trangThaiCT === 'approved' &&
+                $chiTiet->ghiChu === 'return' &&
+                $returnDate &&
+                $returnDate->gt($dueDate)
+                );
+
+                $soNgayTre = $isReturnedLate ? $dueDate->diffInDays($returnDate) : 0;
+                $soTienPhat = $soNgayTre * 5000;
                 @endphp
 
-                @if($isLate)
+                @if($isReturnedLate)
                 <div class="khung-chung-sach-lch">
                     <div class="khung-anh-sach-lch">
                         <img class="image"
@@ -99,26 +105,30 @@
                     </div>
                     <div class="khung-chu-sach-lch">
                         <div class="text-wrapper-7">
-                            Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->phieuMuon->ngayMuon ?? $chiTiet->created_at)->format('d/m/Y') }}
+                            Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->borrow_date)->format('d/m/Y') }}
                         </div>
                         <div class="text-wrapper-8">{{ $chiTiet->sach->tenSach }}</div>
                         <div class="text-wrapper-9">Tác giả: {{ $chiTiet->sach->tacGia }}</div>
                         <div class="text-wrapper-10">
                             Hạn trả: {{ $dueDate->format('d/m/Y') }}
                         </div>
-                        <div class="rectangle-12"></div>
-                        <div class="text-wrapper-12 tra-tre">Trả trễ</div>
-                        @if($phat > 0)
-                        <div class="text-wrapper-13">
-                            Phạt: {{ number_format($phat, 0, ',', '.') }}đ
+                        <div class="text-wrapper-10">
+                            Ngày trả: {{ $returnDate->format('d/m/Y') }}
                         </div>
-                        @endif
+                        <div class="rectangle-12"></div>
+                        <div class="text-wrapper-12 tra-tre">Trả trễ {{ $soNgayTre }} ngày</div>
+                        <div class="text-wrapper-13">
+                            Phạt: {{ number_format($soTienPhat, 0, ',', '.') }}đ
+                        </div>
                     </div>
                 </div>
                 @endif
                 @empty
-                <p>Hiện tại bạn chưa trễ sách nào.</p>
+                <p>Hiện tại bạn chưa có quyển sách nào trả trễ.</p>
                 @endforelse
+
+
+
 
             </div>
         </div>

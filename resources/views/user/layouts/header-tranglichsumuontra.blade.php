@@ -10,26 +10,26 @@
       </a>
 
       <nav class="nav">
-        <a href="{{ url('user/homepage-user') }}">Trang chủ
+        <a href="{{ route('user.homepage-user') }}">Trang chủ
           <img src="{{ asset('images/iconstack.io - (Home).png') }}" alt="Trang chủ logo" />
         </a>
-        <a href="{{ url('user/search-book-user') }}">Tra cứu sách
+        <a href="{{ route('user.search-book-user') }}">Tra cứu sách
           <img src="{{ asset('images/iconstack.io - (Search).png') }}" alt="Tra cứu sách logo" />
         </a>
-        <a href="{{ url('user/trangmuontra(sachdangmuon)') }}">Mượn/ Trả sách
+        <a href="{{ route('user.trangmuontra(sachdangmuon)', ['sach' => 'sachdangmuon']) }}">Mượn/ Trả sách
           <img src="{{ asset('images/iconstack.io - (Book 2).png') }}" alt="Mượn/ Trả sách logo" />
         </a>
-        <a href="{{ url('user/datchosach') }}">Đặt chỗ
+        <a href="{{ route('user.datchosach') }}">Đặt chỗ
           <img src="{{ asset('images/iconstack.io - (Bookmark).png') }}" alt="Đặt chỗ logo" />
         </a>
-        <a href="{{ url('user/tranglichmuontra') }}" class="active">Lịch sử
+        <a href="{{ route('user.tranglichmuontra') }}" class="{{ request()->is('user/tranglichmuontra') ? 'active' : '' }}">Lịch sử
           <img src="{{ asset('images/iconstack.io - (History)-purple.png') }}" alt="Lịch sử logo" />
         </a>
       </nav>
     </div>
 
     <div class="header-right">
-      <a class="fine-box" href="{{ url('user/trangphat') }}">
+      <a class="fine-box" href="{{ route('user.trangphat') }}">
         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8
@@ -113,12 +113,12 @@
             {{ strtoupper(substr(Auth::user()->tenNguoiDung ?? 'U', 0, 1)) }}
           </div>
           <div class="info">
-            <h3>{{ Auth::user()->tenNguoiDung ?? 'Người dùng' }}</h3>
+            <h3>{{ Auth::user()->hoTen ?? 'Người dùng' }}</h3>
             <p>{{ Auth::user()->email ?? '' }}</p>
           </div>
         </div>
 
-        <a href="#" class="popup-item-link">
+        <a href="{{ route('user.info-user') }}" class="popup-item-link">
           <div class="popup-item">
             <div class="icon-popup">
               <img src="{{ asset('images/iconstack.io - (Ic Fluent People Search 24 Filled)-popup.png') }}" alt="">
@@ -130,7 +130,7 @@
           </div>
         </a>
 
-        <a href="#" class="popup-item-link">
+        <a href="{{ route('user.setting-user') }}" class="popup-item-link">
           <div class="popup-item">
             <div class="icon-popup">
               <img src="{{ asset('images/iconstack.io - (Lock Password)-popup.png') }}" alt="">
@@ -157,7 +157,7 @@
         <!-- Đăng xuất -->
         <form action="{{ route('user.logout') }}" method="POST" class="popup-item-link">
           @csrf
-          <button type="submit" class="popup-item logout">
+          <button type="submit" class="popup-item logout-ee">
             <div class="icon-popup">
               <img src="{{ asset('images/iconstack.io - (Log Out)-popup.png') }}" alt="">
             </div>

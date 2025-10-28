@@ -4,6 +4,8 @@
 <section class="dashboard-content">
   <div class="dashboard-header">
     <h1 class="title">Quản lý mượn trả</h1>
+    <h3 class="subtitle">Danh sách yêu cầu mượn trả chưa duyệt</h3>
+
   </div>
 
   <!-- Tìm kiếm -->

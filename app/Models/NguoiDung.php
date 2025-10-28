@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use App\Models\DatCho;
 use App\Models\PhieuMuon;
 use App\Models\PhieuMuonChiTiet;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+
 
 
 
 class NguoiDung extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     protected $table = 'nguoi_dung';
     protected $primaryKey = 'idNguoiDung';

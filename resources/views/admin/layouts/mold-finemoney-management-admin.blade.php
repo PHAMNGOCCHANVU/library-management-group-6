@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý phạt</title>
-  
+  <title>@yield('title', 'Quản lý Admin')</title>
+
   <!-- CSS chung -->
   <link rel="stylesheet" href="{{ asset('css/mold-dashboard-admin.css') }}">
   <link rel="stylesheet" href="{{ asset('css/finemoney-management-admin.css') }}">
-  
+  <link rel="stylesheet" href="{{ asset('css/borrow-return-management-admin.css') }}">
+
   <!-- CSRF token cho AJAX -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  
+
   @stack('styles')
 </head>
+
 <body>
   <div class="container">
-    
+
     <!-- Sidebar menu -->
     <aside class="sidebar">
       <!-- Logo Admin -->
@@ -72,8 +75,72 @@
     </main>
   </div>
 
-  <!-- JS chung -->
-  <script src="{{ asset('js/finemoney-toggle.js') }}"></script>
-  @stack('scripts')
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = document.querySelector('meta[name="csrf-token"]')?.content;
+
+      const popup = document.getElementById('confirmation-popup');
+      const popupMessage = document.getElementById('popup-message');
+      const popupClose = document.getElementById('popup-close');
+
+      if (popupClose) popupClose.addEventListener('click', () => popup.style.display = 'none');
+
+      function showPopup(message) {
+        if (!popup || !popupMessage) return;
+        popupMessage.textContent = message;
+        popup.style.display = 'block';
+        setTimeout(() => popup.style.display = 'none', 2000);
+      }
+
+      // Duyệt phiếu phạt
+      function approveFine(id) {
+        fetch(`/admin/fines/${id}/update-status`, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': token,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+          })
+          .then(res => res.json())
+          .then(data => {
+            showPopup(data.message);
+            const row = document.getElementById(`row-${id}`);
+            if (row) row.remove();
+          })
+          .catch(err => console.error(err));
+      }
+
+      // Gắn sự kiện duyệt cho các icon tick
+      document.querySelectorAll('.icon-tick-fine').forEach(el => {
+        const id = el.dataset.id;
+        if (id) {
+          el.addEventListener('click', () => approveFine(id));
+        }
+      });
+
+      // Tìm kiếm trực tiếp
+      const searchInput = document.querySelector('.search-input');
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const keyword = searchInput.value.trim().toLowerCase();
+          const tableRows = document.querySelectorAll('.finemoney-table tbody tr');
+
+          tableRows.forEach(row => {
+            if (!row.dataset.id) return;
+
+            const maPhieu = row.cells[0]?.textContent.toLowerCase() || "";
+            const tenNguoi = row.cells[1]?.textContent.toLowerCase() || "";
+            const tenSach = row.cells[2]?.textContent.toLowerCase() || "";
+
+            const match = maPhieu.includes(keyword) || tenNguoi.includes(keyword) || tenSach.includes(keyword);
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      }
+    });
+  </script>
 </body>
+
 </html>
