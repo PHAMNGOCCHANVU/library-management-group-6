@@ -19,7 +19,7 @@ class HomepageLoginController extends Controller
     {
         $user = Auth::user();
 
-        
+
 
         $danhMucs = DanhMuc::withCount('sach')->get();
 
@@ -32,18 +32,27 @@ class HomepageLoginController extends Controller
 
         $today = Carbon::today();
         $luotMuonHomNay = PhieuMuonChiTiet::whereDate('created_at', $today)->count();
-        
+
         $sachDangMuon = PhieuMuonChiTiet::where('trangThaiCT', 'borrowed')->count();
-        
+
         //sach yeu thich
         $sachYeuThich = Sach::withCount('muonChiTiets')
             ->orderByDesc('muon_chi_tiets_count')
             ->take(4)
             ->get();
-        
+
 
         $tongPhieuMuon = PhieuMuon::count();
-        $tongPhat = Phat::sum('soTienPhat');
+        
+        $user = Auth::user();
+
+        $tongPhat = 0;
+        if ($user) {
+            $tongPhat = Phat::where('idNguoiDung', $user->idNguoiDung)
+                ->where('trangThaiThanhToan', 'pending')
+                ->sum('soTienPhat');
+        }
+
 
         $phieuMuonCuaToi = collect();
         if ($user) {
@@ -56,8 +65,8 @@ class HomepageLoginController extends Controller
 
         $sachMoi = Sach::latest()->take(6)->get();
 
-        
-       
+
+
 
 
         return view('user.homepage-login-user', [

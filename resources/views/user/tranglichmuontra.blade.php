@@ -66,7 +66,6 @@
     @include('user.layouts.footer-login-user')
   </div>
 
-  {{-- ✅ SCRIPT: Giữ nguyên logic, chỉ chỉnh đường dẫn và tương thích Laravel --}}
   <script>
     function loadPage(page) {
       fetch(page)
@@ -77,10 +76,8 @@
         .catch(error => console.error('Lỗi khi tải trang:', error));
     }
 
-    // ✅ Tải mặc định trang "Tất cả"
     window.onload = () => loadPage("{{ url('user/content-all-lsmn') }}");
 
-    // ✅ Khi click vào các nút menu chính
     document.addEventListener("click", function(e) {
       if (e.target.closest(".group-6")) { // Lịch sử mượn trả
         e.preventDefault();
@@ -92,7 +89,6 @@
       }
     });
 
-    // ✅ Khi click vào các nút chọn loại mượn trả
     document.addEventListener("click", function(e) {
       if (e.target.closest(".group-8")) { // Tất cả
         e.preventDefault();
@@ -113,7 +109,6 @@
     });
   </script>
 
-  {{-- ✅ SCRIPT: Popup người dùng --}}
   <script>
     function togglePopup() {
       const popup = document.getElementById("userPopup");
@@ -127,7 +122,6 @@
     }
   </script>
 
-  <!-- nút thong bao -->
   <script>
     function toggleNotifications() {
       const popup = document.getElementById("notificationPopup");
@@ -282,6 +276,12 @@
     .popup-item.logout-ee:hover {
       background-color: #ffe1e1ff;
       transform: translateY(-1px);
+    }
+
+    .trang-pht .rectangle-9 {
+      left: 690px;
+      width: 145px;
+      background-color: #d7e8ff;
     }
   </style>
 

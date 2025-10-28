@@ -143,7 +143,7 @@
           </div>
         </a>
 
-        <a href="#" class="popup-item-link">
+        <a href="{{ route('user.help') }}" class="popup-item-link">
           <div class="popup-item">
             <div class="icon-popup">
               <img src="{{ asset('images/iconstack.io - (Question Bold)-popup.png') }}" alt="">

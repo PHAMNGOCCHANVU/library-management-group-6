@@ -71,10 +71,17 @@
           @elseif($chiTiet->trangThaiCT === 'approved' && $chiTiet->ghiChu === 'borrow')
           <div class="rectangle-10"></div>
           <div class="text-wrapper-12 dang-muon">Đang mượn</div>
+          @elseif($chiTiet->trangThaiCT === 'pending')
+          <div class="rectangle-9"></div>
+          <div class="text-wrapper-12 cho-duyet">Chờ duyệt</div>
+
+          @endif
 
           @php
           $phat = $chiTiet->phieuMuon->phats?->sum('soTienPhat') ?? 0;
           @endphp
+
+
 
 
           @if($isLate)
@@ -83,10 +90,9 @@
           <div class="text-wrapper-13">
             Phạt: {{ number_format($phat, 0, ',', '.') }}đ
           </div>
-          @else
-          <div class="text-wrapper-12 dang-muon">Đang mượn</div>
+          
           @endif
-          @endif
+
 
         </div>
       </div>

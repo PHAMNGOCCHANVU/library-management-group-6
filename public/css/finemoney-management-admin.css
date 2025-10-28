@@ -13,8 +13,8 @@ body {
 
 .container {
   display: flex;
-  min-height: 100vh;   
-  height: auto; 
+  min-height: 100vh;
+  height: auto;
 }
 
 /* Tổng thể bảng */
@@ -25,7 +25,7 @@ body {
 
 .dashboard-header-fine {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: flex-start;
   margin-bottom: 40px;
 }
@@ -38,8 +38,8 @@ body {
 
 .subtitle {
   font-size: 16px;
-  color: #474747; 
-  margin-left: 0; 
+  color: #474747;
+  margin-left: 0;
 }
 
 
@@ -49,37 +49,37 @@ body {
   margin: 20px auto;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .table-scroll {
-  max-height: 400px; 
-  overflow-y: auto;  
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .finemoney-table {
   table-layout: fixed;
   width: 100%;
-  border-collapse: collapse; 
+  border-collapse: collapse;
   font-size: 15px;
   color: #000000;
   background-color: #ffffff;
-  
+
 }
 
 .finemoney-table thead {
-  background-color: #F1F1F1; 
+  background-color: #F1F1F1;
   font-weight: bold;
-  position: sticky;          
-  top: 0;                   
-  z-index: 2; 
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
-.finemoney-table th, 
+.finemoney-table th,
 .finemoney-table td {
-  word-wrap: break-word; 
-  white-space: normal;   
-  text-align: left;   
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: left;
   padding: 8px;
   padding: 14px 16px;
 }
@@ -92,15 +92,15 @@ body {
   font-size: 14px;
   text-transform: uppercase;
   color: #000000;
-  border-bottom: 1px solid #d1d1d1; 
+  border-bottom: 1px solid #d1d1d1;
 }
 
-.finemoney-table th:last-child{
-  border-top: none;  
+.finemoney-table th:last-child {
+  border-top: none;
 }
 
-.finemoney-table tbody tr{
-  border-bottom: 1px solid #d1d1d1; 
+.finemoney-table tbody tr {
+  border-bottom: 1px solid #d1d1d1;
 }
 
 .finemoney-table tbody tr:last-child {
@@ -117,7 +117,7 @@ body {
 .sta {
   display: inline-block;
   padding: 6px 16px;
-  border-radius: 999px; 
+  border-radius: 999px;
   font-weight: 600;
   font-size: 14px;
   text-align: center;
@@ -126,34 +126,33 @@ body {
 
 .status {
   display: inline-block;
-  padding: 2px 10px; 
+  padding: 9px 10px;
   border-radius: 50px;
   font-weight: 600;
   font-size: 14px;
   text-align: center;
-  line-height: 1; 
-  min-width: 80px; 
-  margin-left: 46px;
+  line-height: 1;
+  min-width: 80px;
+  /* margin-left: 46px; */
   margin-top: 3px;
-
-  text-align: center;     
-  vertical-align: middle; 
+  text-align: center;
+  vertical-align: middle;
 }
 
 .status.paiding {
   background-color: #e1ffe1;
-  color: #005c0f;             
+  color: #005c0f;
 }
 
-.status.notyetpaid { 
+.status.notyetpaid {
   background-color: #ffe1e1;
-  color:#ff0000;
+  color: #ff0000;
 }
 
 .finemoney {
   font-size: 17px;
   font-weight: 700px;
-  color: #ff0000;             
+  color: #ff0000;
 }
 
 
@@ -165,13 +164,13 @@ body {
 }
 
 .icon-tick-fine {
-  stroke: #008000; 
+  stroke: #008000;
   cursor: pointer;
   margin-left: 21px;
 }
 
 .icon-x {
-  stroke: #cc0000; 
+  stroke: #cc0000;
   cursor: pointer;
 }
 

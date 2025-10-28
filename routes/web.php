@@ -244,3 +244,10 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
         ->name('user.xac-nhan-thanh-toan');
 });
 
+
+use App\Http\Controllers\User\HelpController;
+
+Route::prefix('user')->middleware(['auth'])->group(function() {
+    Route::get('/help-user', [HelpController::class, 'index'])->name('user.help');
+});
+    

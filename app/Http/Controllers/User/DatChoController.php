@@ -53,7 +53,6 @@ class DatChoController extends Controller
     }
 
 
-    // Action đặt chỗ
     public function reserve($idSach)
     {
         $user = Auth::user();
@@ -101,9 +100,9 @@ class DatChoController extends Controller
             return response()->json(['message' => 'Không tìm thấy đặt chỗ.'], 404);
         }
 
-        $datCho->delete();
+        $datCho->status = 'cancel';
+        $datCho->save();
 
-        // Tạo thông báo
         $sach = $datCho->sach;
         ThongBao::create([
             'idNguoiDung' => $user->idNguoiDung,

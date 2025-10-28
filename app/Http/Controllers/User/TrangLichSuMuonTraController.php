@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\NguoiDung;
 use App\Models\PhieuMuonChiTiet;
 use App\Models\DatCho;
+use App\Models\Phat;
 
 class TrangLichSuMuonTraController extends Controller
 {
@@ -30,14 +31,14 @@ class TrangLichSuMuonTraController extends Controller
             ->where('phieu_muon_chi_tiet.ghiChu', 'return')
             ->count();
 
-        $tongPhat = $user->muonChiTiets()
-            ->with('phats')
-            ->get()
-            ->sum(function ($chiTiet) {
-                return $chiTiet->phats?->sum('soTienPhat') ?? 0;
-            });
+        $user = Auth::user();
 
-
+        $tongPhat = 0;
+        if ($user) {
+            $tongPhat = Phat::where('idNguoiDung', $user->idNguoiDung)
+                ->where('trangThaiThanhToan', 'pending')
+                ->sum('soTienPhat');
+        }
 
         $activeTab = $request->query('tab', 'tatca');
 
@@ -145,7 +146,10 @@ class TrangLichSuMuonTraController extends Controller
             abort(403, "Người dùng hiện tại không hợp lệ hoặc chưa đăng nhập đúng.");
         }
 
-        $datChos = $user->datChos()->with('sach')->get();
+        $datChos = $user->datChos()
+            ->with('sach')
+            ->where('status', '!=', 'cancel')
+            ->get();
 
         return view('user.content-datcho', compact('datChos'));
     }
