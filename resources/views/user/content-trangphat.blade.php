@@ -31,14 +31,7 @@
                             <div class="text-wrapper-7">Phạt/ngày: 5.000đ</div>
                         </div>
                     </div>
-                    <div class="khung-anh-sach-lch">
-                        <div class="text-wrapper-13">{{ number_format($phat->soTienPhat,0,',','.') }}đ</div>
-                        <div class="rectangle-12">
-                            <div class="text-wrapper-12 tra-tre">
-                                {{ $phat->trangThaiThanhToan === 'pending' ? 'Chưa thanh toán' : 'Đã thanh toán' }}
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 @endforeach
 

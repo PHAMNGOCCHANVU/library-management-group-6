@@ -10,16 +10,13 @@ class PhieuMuonSeeder extends Seeder
 {
     public function run()
     {
-        // Tạm tắt kiểm tra FK để xóa dữ liệu cũ
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('phieu_muon_chi_tiet')->truncate();
         DB::table('phieu_muon')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // Lấy tất cả user có vaiTro = reader
         $readers = DB::table('nguoi_dung')->where('vaiTro', 'reader')->get();
 
-        // Lấy tất cả sách
         $books = DB::table('sach')->pluck('idSach');
 
         if ($readers->isEmpty() || $books->isEmpty()) {
@@ -31,7 +28,6 @@ class PhieuMuonSeeder extends Seeder
         $chiTietData = [];
 
         foreach ($readers as $reader) {
-            // Mỗi reader tạo 1-3 phiếu mượn
             $numPhieu = rand(1, 3);
             for ($i = 0; $i < $numPhieu; $i++) {
                 $ngayMuon = Carbon::now()->subDays(rand(1, 10));

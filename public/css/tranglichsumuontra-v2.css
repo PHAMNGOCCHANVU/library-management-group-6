@@ -782,12 +782,7 @@
 .trang-pht .khung-chung-sach-lch {
   top: 925px;
 }
-.trang-pht .khung-anh-sach-lch {
-    position: relative;
-    width: 16rem;
-    height: 20rem;
-    padding: 40px;
-}
+
 .trang-pht .khung-chu-sach-lch {
     position: relative;
     width: 55rem;
@@ -826,7 +821,7 @@
   left: 0px;
   height: 45px;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 45px;
 }
 .trang-pht .text-wrapper-9 {
@@ -834,10 +829,11 @@
   left: 0;
   height: 38px;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 18px;
   line-height: 37.5px;
 }
 .trang-pht .text-wrapper-7 {
+  font-size: 15px;
   left: 0px;
 }
 .trang-pht .text-wrapper-10 {

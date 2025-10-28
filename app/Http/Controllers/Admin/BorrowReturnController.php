@@ -148,8 +148,8 @@ class BorrowReturnController extends Controller
                 'idPhieuMuon' => $chiTiet->idPhieuMuon,
                 'loaiThongBao' => $chiTiet->ghiChu === 'borrow' ? 'Thông báo mượn sách' : 'Thông báo trả sách',
                 'noiDung' => $status === 'approved' ?
-                    "Yêu cầu {$chiTiet->sach->tenSach} đã được duyệt." :
-                    "Yêu cầu {$chiTiet->sach->tenSach} đã bị từ chối.",
+                    "Yêu cầu trả sách {$chiTiet->sach->tenSach} đã được duyệt." :
+                    "Yêu cầu trả sách {$chiTiet->sach->tenSach} đã bị từ chối.",
                 'thoiGianGui' => now(),
                 'trangThai' => 'unread'
             ]);

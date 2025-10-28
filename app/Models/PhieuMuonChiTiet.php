@@ -8,6 +8,16 @@ class PhieuMuonChiTiet extends Model
 {
     protected $table = 'phieu_muon_chi_tiet';
     protected $primaryKey = 'idPhieuMuonChiTiet';
+    protected $fillable = [
+        'idPhieuMuon',
+        'idSach',
+        'borrow_date',
+        'due_date',
+        'trangThaiCT',
+        'return_date',
+        'ghiChu',
+    ];
+
 
     public function phieuMuon()
     {
