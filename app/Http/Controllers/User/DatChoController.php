@@ -33,7 +33,11 @@ class DatChoController extends Controller
             abort(403, "Người dùng không hợp lệ hoặc chưa đăng nhập.");
         }
 
-        $datChos = $user->datChos()->with('sach')->get();
+        $datChos = $user->datChos()
+            ->where('status', 'waiting') 
+            ->with('sach')              
+            ->get();
+
 
         return view('user.content-datchosach', compact('datChos'));
     }
