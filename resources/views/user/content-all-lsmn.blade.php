@@ -62,9 +62,7 @@
           @endphp
 
           @if($chiTiet->trangThaiCT === 'approved' && $chiTiet->ghiChu === 'return')
-          <div class="text-wrapper-11">
-            Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->updated_at)->format('d/m/Y') }}
-          </div>
+          
           <div class="rectangle-8"></div>
           <div class="text-wrapper-12 da-tra">Đã trả</div>
 
