@@ -1,55 +1,38 @@
 # ==========================================
-# 1️⃣ Stage 1: Cài PHP dependencies (Composer)
-# ==========================================
-FROM php:8.2-cli AS vendor
-
-# Cài đặt các thư viện và composer
-RUN apt-get update && apt-get install -y \
-    git unzip zip libpng-dev libjpeg-dev libfreetype6-dev libzip-dev && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install gd zip && \
-    rm -rf /var/lib/apt/lists/* && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-WORKDIR /app
-
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-COPY . .
-RUN composer dump-autoload --optimize
-
-
-
-# ==========================================
-# 2️⃣ Stage 2: Runtime
+# Dockerfile Laravel 1-stage (Render-optimized)
 # ==========================================
 FROM php:8.2-cli
 
-WORKDIR /var/www/html
-
-# Cài đặt các thư viện hệ thống và PHP extension cần thiết
+# Cài đặt dependencies hệ thống + PHP extensions
 RUN apt-get update && apt-get install -y \
     git curl unzip zip libpng-dev libjpeg-dev libfreetype6-dev libzip-dev \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install pdo_mysql gd zip bcmath \
   && rm -rf /var/lib/apt/lists/*
 
-# Copy code và vendor từ stage trước
-COPY --from=vendor /app /var/www/html
+# Cài composer toàn cục
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# ⚠️ Không có build frontend nên không copy public/build
+WORKDIR /var/www/html
 
-# Phân quyền cho storage và bootstrap/cache
+# Copy toàn bộ mã nguồn (bao gồm artisan)
+COPY . .
+
+# Cài đặt dependencies (tắt scripts để tránh lỗi artisan chưa setup)
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts \
+ && composer dump-autoload --optimize \
+ && php artisan package:discover --ansi || true
+
+# Quyền truy cập storage + cache
 RUN chmod -R 775 storage bootstrap/cache || true
 
-# Thiết lập biến môi trường mặc định
+# Thiết lập biến môi trường
 ENV APP_ENV=production
 ENV PORT=8000
 
 EXPOSE 8000
 
-# Lệnh khởi chạy chính
+# Lệnh khởi động
 CMD sh -lc '\
   if [ -z "${APP_KEY}" ]; then php artisan key:generate --ansi || true; fi && \
   php artisan storage:link || true && \
