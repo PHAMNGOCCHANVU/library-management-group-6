@@ -123,19 +123,34 @@ class BookController extends Controller
         $book->idDanhMuc = $request->idDanhMuc;
         $book->moTa = $request->moTa;
         $book->vitri = $request->vitri;
-
         $book->trangThai = ($request->soLuong == 0) ? 'unavailable' : 'available';
 
-        if ($request->hasFile('anhBia') && $request->file('anhBia') !== null) {
-            $book->anhBia = FileHelper::uploadImageToCloudinary($request->file('anhBia'), 'books');
+        // Xử lý upload ảnh vào public/images
+        if ($request->hasFile('anhBia')) {
+            $file = $request->file('anhBia');
+
+            // Chuẩn hóa tên file
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $safeName = \Str::slug($originalName) . '.' . $extension;
+
+            $destination = public_path('images');
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $file->move($destination, $safeName);
+            $book->anhBia = 'images/' . $safeName;
         } else {
             $book->anhBia = $request->anhBiaOld ?? $book->anhBia;
         }
 
         $book->save();
 
-        app(\App\Http\Controllers\Admin\BorrowReturnController::class)
-            ->notifyReservedUsers($book->idSach);
+        if (class_exists(\App\Http\Controllers\Admin\BorrowReturnController::class)) {
+            app(\App\Http\Controllers\Admin\BorrowReturnController::class)
+                ->notifyReservedUsers($book->idSach);
+        }
 
         return response()->json([
             'success' => true,
