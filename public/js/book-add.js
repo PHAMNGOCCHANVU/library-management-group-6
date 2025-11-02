@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const formData = new FormData(addBookForm);
 
-    const addAnhBia = document.querySelector('#addAnhBia'); 
+    const addAnhBia = document.querySelector('#addAnhBia');
 
-    if (addAnhBia.files && addAnhBia.files.length > 0) {
+    if (addAnhBia && addAnhBia.files.length > 0) {
       const file = addAnhBia.files[0];
       const allowedExtensions = ['jpg', 'jpeg', 'png'];
       const fileExt = file.name.split('.').pop().toLowerCase();
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      formData.append('anhBia', file);
+      formData.append('anhBia', file); 
     }
 
     const year = parseInt(formData.get('namXuatBan'));

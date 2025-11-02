@@ -61,8 +61,15 @@ class BookController extends Controller
 
         $book->trangThai = ($request->soLuong == 0) ? 'unavailable' : 'available';
 
-        if ($request->hasFile('anhBia')) {
-            $book->anhBia = FileHelper::uploadImageToCloudinary($request->file('anhBia'), 'books');
+        if ($request->hasFile('anhBia') && $request->file('anhBia') !== null) {
+            try {
+                $book->anhBia = FileHelper::uploadImageToCloudinary($request->file('anhBia'), 'books');
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '❌ Upload ảnh thất bại: ' . $e->getMessage()
+                ], 500);
+            }
         }
 
 
