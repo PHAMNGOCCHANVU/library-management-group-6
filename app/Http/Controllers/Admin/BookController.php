@@ -104,10 +104,10 @@ class BookController extends Controller
 
         $book->trangThai = ($request->soLuong == 0) ? 'unavailable' : 'available';
 
-        if ($request->hasFile('anhBia')) {
+        if ($request->hasFile('anhBia') && $request->file('anhBia') !== null) {
             $book->anhBia = FileHelper::uploadImageToCloudinary($request->file('anhBia'), 'books');
-        } elseif ($request->filled('anhBiaOld')) {
-            $book->anhBia = $request->anhBiaOld;
+        } else {
+            $book->anhBia = $request->anhBiaOld ?? $book->anhBia;
         }
 
         $book->save();
