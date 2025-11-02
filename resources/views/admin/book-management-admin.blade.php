@@ -200,7 +200,9 @@
         <div>
           <label>Ảnh bìa định dạng tên ví dụ : "nha-gia-kim.jpg"</label>
           <input type="file" id="editAnhBia" name="anhBia" accept="image/png, image/jpeg">
+          @foreach($books as $book)
           <input type="hidden" id="editAnhBiaOld" name="anhBiaOld" value="{{ $book->anhBia }}">
+          @endforeach
 
         </div>
       </div>
