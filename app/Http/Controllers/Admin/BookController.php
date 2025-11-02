@@ -8,6 +8,7 @@ use App\Models\Sach;
 use App\Models\DanhMuc;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Helpers\FileHelper;
 
 class BookController extends Controller
 {
@@ -61,14 +62,9 @@ class BookController extends Controller
         $book->trangThai = ($request->soLuong == 0) ? 'unavailable' : 'available';
 
         if ($request->hasFile('anhBia')) {
-            $file = $request->file('anhBia');
-            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::slug($originalName) . '-' . time() . '.' . $extension;
-            $file->move(public_path('images'), $filename);
-            $book->anhBia = 'images/' . $filename;
+            $book->anhBia = FileHelper::uploadImageToCloudinary($request->file('anhBia'), 'books');
         }
-        
+
 
         $book->save();
 
@@ -109,12 +105,7 @@ class BookController extends Controller
         $book->trangThai = ($request->soLuong == 0) ? 'unavailable' : 'available';
 
         if ($request->hasFile('anhBia')) {
-            $file = $request->file('anhBia');
-            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::slug($originalName) . '-' . time() . '.' . $extension;
-            $file->move(public_path('images'), $filename);
-            $book->anhBia = 'images/' . $filename;
+            $book->anhBia = FileHelper::uploadImageToCloudinary($request->file('anhBia'), 'books');
         } elseif ($request->filled('anhBiaOld')) {
             $book->anhBia = $request->anhBiaOld;
         }
