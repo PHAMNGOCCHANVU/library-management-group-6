@@ -72,19 +72,20 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('_method', 'PUT');
     formData.append('_token', document.querySelector('input[name="_token"]').value);
 
-    if (editAnhBia.files && editAnhBia.files.length > 0) {
-      const file = editAnhBia.files[0];
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    const editAnhBiaOld = document.querySelector('#editAnhBiaOld');
 
+    if (editAnhBia.files.length > 0) {
+      const file = editAnhBia.files[0];
+      const allowedTypes = ['image/png', 'image/jpeg'];
       if (!allowedTypes.includes(file.type)) {
-        alert('❌ Ảnh bìa chỉ chấp nhận định dạng PNG hoặc JPG!');
+        alert('❌ Ảnh bìa chỉ chấp nhận PNG hoặc JPG');
         return;
       }
-
       formData.append('anhBia', file);
+    } else {
+      formData.append('anhBiaOld', editAnhBiaOld.value);
     }
 
-    formData.append('_method', 'PUT');
     fetch(`/admin/book-management-admin/${bookId}`, {
       method: 'POST',
       headers: {
