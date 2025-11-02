@@ -3,23 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập Quản trị viên</title>
-    <link rel="stylesheet" href="css/login(admin).css" />
-    <link rel="stylesheet" href="css/header_login(admin).css" />
-    <link rel="stylesheet" href="css/footer_login(admin).css" />
+    <title>Đăng nhập Người dùng thành công</title>
+    <link rel="stylesheet" href="css/signup_successful-user.css" />
+    <link rel="stylesheet" href="css/header_login-admin.css" />
+    <link rel="stylesheet" href="css/footer_login-admin.css" />
   </head>
   <body>
     <div class="page-container">
+      <!-- Header -->
       <header class="header">
-        <div class="logo">
+        <a href="homepage-login-user.html" class="logo">
           <div class="logo-icon">
             <img src="images/iconstack.io - (Book).png" alt="Thư viện Tri Thức logo" />
           </div>
           <div class="logo-text">Thư viện<br />Tri Thức</div>
-        </div>
+        </a>
 
         <nav class="nav">
-          <a href="#">Trang chủ
+          <a href="homepage-login-user.html">Trang chủ
             <img src="images/iconstack.io - (Home).png" alt="Trang chủ logo" />
           </a>
           <a href="#">Tra cứu sách
@@ -35,52 +36,32 @@
             <img src="images/iconstack.io - (History).png" alt="Lịch sử logo" />
           </a>
         </nav>
-
+        
         <div class="buttons">
-          <button class="btn admin">Quản Trị Viên</button>
-          <button class="btn login">Đăng nhập</button>
-          <button class="btn signup">Đăng ký</button>
+          <a href="login-admin.html" class="btn admin">Quản Trị Viên</a>
+          <a href="login-user.html" class="btn login">Đăng nhập</a>
+          <a href="signup-user.html" class="btn signup">Đăng ký</a>
         </div>
+
       </header>
 
-      <!-- Login Box -->
-      <main class="login-box">
-        <div class="avatar">
-          <div class="avatar-icon">
-            <img src="images/iconstack.io - (People Fill).png" alt="Quản trị viên logo" />
+      <!-- Sign up successful -->
+      <div class="success-box">
+        <div class="success-bg"></div>
+        <div class="success-text">Đăng ký tài khoản người dùng thành công</div>
+        <div class="success-circle">
+          <div class="avatar">
+              <div class="avatar-icon">
+                  <img src="images/iconstack.io - (Ticktick)-green.png" alt="Quản trị viên logo" />
+              </div>
           </div>
         </div>
-        <h1>Đăng nhập<br />Quản Trị Viên</h1>
-        <p class="desc">
-          Đăng nhập vào tài khoản quản trị viên của bạn để quản lý hệ thống
-        </p>
 
-        <form class="login-form">
-          <label for="email">Email</label>
-          <div class="input-box">
-            <input type="email" id="email" placeholder="Nhập email của bạn" />
-          </div>
+        <a href="homepage-user.html" class="btn-comeback">Quay lại trang chủ</a>
+      </div>
 
-          <label for="password">Mật khẩu</label>
-          <div class="input-box">
-            <div class="password-wrapper">
-              <input
-                type="password"
-                id="password"
-                placeholder="Nhập mật khẩu"
-              />
-              <button type="button" class="pwd-toggle" aria-label="Hiện/ẩn mật khẩu">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="#333" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="12" cy="12" r="3" stroke="#333" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </div>
 
-          <button type="submit" class="btn-login">Đăng nhập</button>
-        </form>
-      </main>
+
 
       <!-- Footer -->
       <footer class="footer">
@@ -113,4 +94,13 @@
     </div>
   </body>
   <script defer src="js/password-toggle.js"></script>
+
+    <script>
+    document.querySelectorAll('a[href="#"]').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault(); 
+        alert("⚠️ Bạn cần đăng nhập hoặc đăng ký để sử dụng chức năng này!");
+      });
+    });
+  </script>
 </html>
