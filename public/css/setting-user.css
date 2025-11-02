@@ -17,6 +17,7 @@ body {
 .title-box {
   text-align: left;         
   margin: 40px 100px;
+  background: #F8F9FF;
 }
 
 .main-title {
@@ -34,7 +35,7 @@ body {
 
 /* ======== Nội dung chính ======== */
 .change-pw-container {
-  background: #f5f6ff;
+  background: #F8F9FF;
   display: flex;
   justify-content: center;
   align-items: center;

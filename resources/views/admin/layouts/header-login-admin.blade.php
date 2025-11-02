@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thư viện Hiện đại - Người dùng</title>
+  <title>Đăng nhập quản trị viên - Người dùng</title>
   <link rel="stylesheet" href="{{ asset('css/login-admin.css') }}">
   <link rel="stylesheet" href="{{ asset('css/header_login-admin.css') }}">
   <link rel="stylesheet" href="{{ asset('css/footer_login-admin.css') }}">

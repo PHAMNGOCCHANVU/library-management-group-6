@@ -4,6 +4,8 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
+    <title>Đặt chỗ sách - Người dùng</title>
+
     <link rel="stylesheet" href="{{ asset('css/styleguide.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/globals.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/header-homepage-user.css') }}" />

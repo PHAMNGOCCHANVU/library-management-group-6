@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mượn trả sách - Người dùng</title>
+
   <link rel="stylesheet" href="{{ asset('css/styleguide.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/globals.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/header-homepage-user.css') }}" />
