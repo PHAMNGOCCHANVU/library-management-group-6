@@ -89,19 +89,20 @@
                             alt="{{ $chiTiet->sach->tenSach }}">
                     </div>
                     <div class="khung-chu-sach-lch">
-                        <div class="text-wrapper-7">Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->phieuMuon->ngayMuon ?? $chiTiet->created_at)->format('d/m/Y') }}</div>
+                        <div class="text-wrapper-7">Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->borrow_date)->format('d/m/Y') }}</div>
                         <div class="text-wrapper-8">{{ $chiTiet->sach->tenSach }}</div>
                         <div class="text-wrapper-9">Tác giả: {{ $chiTiet->sach->tacGia }}</div>
-                        <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->phieuMuon->hanTra ?? $chiTiet->due_date)->format('d/m/Y') }}</div>
-                        <div class="text-wrapper-11">Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->updated_at)->format('d/m/Y') }}</div>
+                        <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->due_date)->format('d/m/Y') }}</div>
+                        <div class="text-wrapper-11">Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->return_date)->format('d/m/Y') }}</div>
                         <div class="rectangle-8"></div>
                         <div class="text-wrapper-12 da-tra">Đã trả</div>
 
                         @php
-                        $phat = $chiTiet->phieuMuon->phats?->sum('soTienPhat') ?? 0;
+                        $soNgayTre = ceil($dueDate->diffInHours($returnDate) / 24);
+                        $soTienPhat = $soNgayTre * 5000;
                         @endphp
-                        @if($phat > 0)
-                        <div class="text-wrapper-13">Phạt: {{ number_format($phat, 0, ',', '.') }}đ</div>
+                        @if($soTienPhat > 0)
+                        <div class="text-wrapper-13">Phạt: {{ number_format($soTienPhat, 0, ',', '.') }}đ</div>
                         @endif
                     </div>
                 </div>

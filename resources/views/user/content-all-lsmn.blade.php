@@ -51,18 +51,20 @@
           <img class="image" src="{{ $chiTiet->sach->anhBia ? asset($chiTiet->sach->anhBia) : asset('images/default-book.jpg') }}" alt="{{ $chiTiet->sach->tenSach }}">
         </div>
         <div class="khung-chu-sach-lch">
-          <div class="text-wrapper-7">Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->phieuMuon->ngayMuon ?? $chiTiet->created_at)->format('d/m/Y') }}</div>
+          <div class="text-wrapper-7">Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->borrow_date)->format('d/m/Y') }}</div>
           <div class="text-wrapper-8">{{ $chiTiet->sach->tenSach }}</div>
           <div class="text-wrapper-9">Tác giả: {{ $chiTiet->sach->tacGia }}</div>
-          <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->phieuMuon->hanTra ?? $chiTiet->due_date)->format('d/m/Y') }}</div>
+          
+          <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->due_date)->format('d/m/Y') }}</div>
+          <div class="text-wrapper-11">Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->return_date)->format('d/m/Y') }}</div>
           @php
           $today = \Carbon\Carbon::today();
-          $dueDate = \Carbon\Carbon::parse($chiTiet->phieuMuon->hanTra ?? $chiTiet->due_date);
+          $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
           $isLate = $today->gt($dueDate);
           @endphp
 
           @if($chiTiet->trangThaiCT === 'approved' && $chiTiet->ghiChu === 'return')
-          
+
           <div class="rectangle-8"></div>
           <div class="text-wrapper-12 da-tra">Đã trả</div>
 
@@ -86,7 +88,7 @@
           $returnDate->gt($dueDate)
           );
 
-          $soNgayTre = $isReturnedLate ? $dueDate->diffInDays($returnDate) : 0;
+          $soNgayTre = ceil($dueDate->diffInHours($returnDate) / 24);
           $soTienPhat = $soNgayTre * 5000;
           @endphp
 

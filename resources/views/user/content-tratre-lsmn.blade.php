@@ -92,7 +92,7 @@
                 $returnDate->gt($dueDate)
                 );
 
-                $soNgayTre = $isReturnedLate ? $dueDate->diffInDays($returnDate) : 0;
+                $soNgayTre = ceil($dueDate->diffInHours($returnDate) / 24);
                 $soTienPhat = $soNgayTre * 5000;
                 @endphp
 
@@ -109,10 +109,10 @@
                         </div>
                         <div class="text-wrapper-8">{{ $chiTiet->sach->tenSach }}</div>
                         <div class="text-wrapper-9">Tác giả: {{ $chiTiet->sach->tacGia }}</div>
-                    
-                        <div class="text-wrapper-10">
-                            Ngày trả: {{ $returnDate->format('d/m/Y') }}
-                        </div>
+
+                        <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->due_date)->format('d/m/Y') }}</div>
+                        <div class="text-wrapper-11">Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->return_date)->format('d/m/Y') }}</div>
+                        
                         <div class="rectangle-12"></div>
                         <div class="text-wrapper-12 tra-tre">Trả trễ</div>
                         <div class="text-wrapper-13">
