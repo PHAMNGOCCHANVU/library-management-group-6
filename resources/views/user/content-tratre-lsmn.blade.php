@@ -82,6 +82,8 @@
 
                 @forelse ($muonChiTiets as $chiTiet)
                 @php
+                use Carbon\Carbon;
+                
                 $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
                 $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
 
@@ -112,7 +114,7 @@
 
                         <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->due_date)->format('d/m/Y') }}</div>
                         <div class="text-wrapper-11">Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->return_date)->format('d/m/Y') }}</div>
-                        
+
                         <div class="rectangle-12"></div>
                         <div class="text-wrapper-12 tra-tre">Trả trễ</div>
                         <div class="text-wrapper-13">

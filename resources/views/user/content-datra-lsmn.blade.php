@@ -98,6 +98,8 @@
                         <div class="text-wrapper-12 da-tra">Đã trả</div>
 
                         @php
+                        use Carbon\Carbon;
+                        
                         $returnDate = now();
                         $dueDate = Carbon::parse($chiTiet->due_date);
                         $borrowDate = Carbon::parse($chiTiet->borrow_date);

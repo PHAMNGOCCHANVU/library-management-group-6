@@ -78,6 +78,8 @@
           @endif
 
           @php
+          use Carbon\Carbon;
+          
           $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
           $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
 
