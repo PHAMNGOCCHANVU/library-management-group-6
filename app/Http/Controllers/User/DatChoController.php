@@ -81,7 +81,7 @@ class DatChoController extends Controller
         $alreadyReserved = DB::table('dat_cho')
             ->where('idNguoiDung', $userId)
             ->where('idSach', $idSach)
-            ->whereIn('status', ['waiting', 'active'])
+            ->whereIn('status', 'active')
             ->exists();
 
         if ($alreadyReserved) {
@@ -91,7 +91,20 @@ class DatChoController extends Controller
             ]);
         }
 
-        $queueOrder = DB::table('dat_cho')->where('idSach', $idSach)->count() + 1;
+        $hasActiveBorrow = DB::table('phieu_muon_chi_tiet')
+            ->join('phieu_muon', 'phieu_muon_chi_tiet.idPhieuMuon', '=', 'phieu_muon.idPhieuMuon')
+            ->where('phieu_muon_chi_tiet.idSach', $idSach)
+            ->where('phieu_muon.trangThaiCT', 'approved')
+            ->where('phieu_muon.ghiChu', 'borrow')
+            ->exists();
+        
+        $activeReservations = DB::table('dat_cho')
+            ->where('idSach', $idSach)
+            ->where('status', 'active') 
+            ->count();
+
+        $queueOrder = $activeReservations + ($hasActiveBorrow ? 1 : 0);
+
         $expireDate = $today->copy()->addDays(14);
 
         $datChoId = DB::table('dat_cho')->insertGetId([
@@ -152,7 +165,7 @@ class DatChoController extends Controller
 
         DatCho::where('idNguoiDung', $user->idNguoiDung)
             ->where('idSach', $datCho->idSach)
-            
+
             ->update(['status' => 'approved']);
 
         return response()->json(['message' => 'Bạn đã hủy đặt chỗ sách thành công!']);
