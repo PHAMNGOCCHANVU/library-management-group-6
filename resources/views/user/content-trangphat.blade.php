@@ -22,18 +22,18 @@
                         <div class="text-wrapper-9">Tác giả: {{ $phat->phieuMuonChiTiet->sach->tacGia ?? '...' }}</div>
                         <div class="muc-date-phat">
                             <div class="text-wrapper-7">
-                                Hạn trả: {{ \Carbon\Carbon::parse($phat->phieuMuonChiTiet->hanTra ?? now())->format('d/m/Y') }}
+                                Hạn trả: {{ \Carbon\Carbon::parse($phat->phieuMuonChiTiet->due_date ?? now())->format('d/m/Y') }}
                             </div>
                             <div class="text-wrapper-7">
-                                Ngày trả: {{ \Carbon\Carbon::parse($phat->phieuTra->ngayTra ?? now())->format('d/m/Y') }}
+                                Ngày trả: {{ \Carbon\Carbon::parse($phat->phieuMuonChiTiet->return_date ?? now())->format('d/m/Y') }}
                             </div>
                             <div class="text-wrapper-7">Số ngày trễ: {{ $phat->soNgayTre }} ngày</div>
                             <div class="text-wrapper-7">Phạt/ngày: 5.000đ</div>
                         </div>
                     </div>
-                    
                 </div>
                 @endforeach
+
 
                 {{-- Tổng tiền phạt --}}
                 <div class="rectangle-tong-tien-phat">
