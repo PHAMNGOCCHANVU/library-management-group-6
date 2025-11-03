@@ -97,13 +97,14 @@ class DatChoController extends Controller
             ->where('phieu_muon_chi_tiet.trangThaiCT', 'approved')
             ->where('phieu_muon_chi_tiet.ghiChu', 'borrow')
             ->exists();
-        
+
         $activeReservations = DB::table('dat_cho')
             ->where('idSach', $idSach)
-            ->where('status', 'active') 
+            ->where('status', 'active')
             ->count();
 
-        $queueOrder = $activeReservations + ($hasActiveBorrow ? 1 : 0);
+        $queueOrder = 1 + $activeReservations + ($hasActiveBorrow ? 1 : 0);
+
 
         $expireDate = $today->copy()->addDays(14);
 
