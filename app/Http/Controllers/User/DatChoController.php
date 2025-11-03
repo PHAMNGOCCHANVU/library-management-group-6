@@ -94,8 +94,8 @@ class DatChoController extends Controller
         $hasActiveBorrow = DB::table('phieu_muon_chi_tiet')
             ->join('phieu_muon', 'phieu_muon_chi_tiet.idPhieuMuon', '=', 'phieu_muon.idPhieuMuon')
             ->where('phieu_muon_chi_tiet.idSach', $idSach)
-            ->where('phieu_muon.trangThaiCT', 'approved')
-            ->where('phieu_muon.ghiChu', 'borrow')
+            ->where('phieu_muon_chi_tiet.trangThaiCT', 'approved')
+            ->where('phieu_muon_chi_tiet.ghiChu', 'borrow')
             ->exists();
         
         $activeReservations = DB::table('dat_cho')
