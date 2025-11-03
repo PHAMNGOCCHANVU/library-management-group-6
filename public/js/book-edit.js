@@ -1,85 +1,121 @@
-const editOverlay = document.getElementById('editOverlay');
-const editModal = document.getElementById('editModal');
-const closeEditModal = document.getElementById('closeEditModal');
-const cancelEditBtn = document.getElementById('cancelEditBtn');
+document.addEventListener('DOMContentLoaded', () => {
 
-const editMa = document.getElementById('editMa');
-const editTen = document.getElementById('editTen');
-const editTacGia = document.getElementById('editTacGia');
-const editTheLoai = document.getElementById('editTheLoai');
-const editSoLuong = document.getElementById('editSoLuong');
+  const editModal = document.getElementById('editModal');
+  const editOverlay = document.getElementById('editOverlay');
+  const closeEditModal = document.getElementById('closeEditModal');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
+  const editForm = document.getElementById('editForm');
 
-let currentRow = null;
+  const editMa = document.getElementById('editMa');
+  const editTen = document.getElementById('editTen');
+  const editTacGia = document.getElementById('editTacGia');
+  const editNamXuatBan = document.getElementById('editNamXuatBan');
+  const editMoTa = document.getElementById('editMoTa');
+  const editTheLoai = document.getElementById('editTheLoai');
+  const editSoLuong = document.getElementById('editSoLuong');
+  const editVitri = document.getElementById('editvitri');
+  const editAnhBia = document.getElementById('editAnhBia');
+  const editAnhBiaOld = document.getElementById('editAnhBiaOld');
 
-if (!editOverlay || !editModal) {
-  console.warn('editOverlay hoặc editModal không tìm thấy — kiểm tra DOM/ID.');
-}
+  let currentRow = null;
 
-document.addEventListener('click', function (e) {
-  const editBtn = e.target.closest('.edit-icon');
-  if (!editBtn) return;
+  function openEditPopup(row) {
+    currentRow = row;
+    const cells = row.querySelectorAll('td');
 
-  currentRow = editBtn.closest('tr');
-  if (!currentRow) return;
+    editMa.value = cells[0].textContent;
+    editTen.value = cells[1].textContent;
+    editTacGia.value = cells[2].textContent;
+    editNamXuatBan.value = cells[3].textContent;
+    editMoTa.value = cells[4].textContent;
+    editTheLoai.value = cells[5].dataset.id || '';
+    editSoLuong.value = cells[6].textContent;
+    editVitri.value = cells[7].textContent;
+    editAnhBiaOld.value = currentRow.dataset.anhbia || '';
 
-  const cells = currentRow.querySelectorAll('td');
-  if (!cells || cells.length < 5) return;
-
-  editMa.value = cells[0].textContent.trim();
-  editTen.value = cells[1].textContent.trim();
-  editTacGia.value = cells[2].textContent.trim();
-  editTheLoai.value = cells[3].textContent.trim();
-  editSoLuong.value = cells[4].textContent.trim();
-
-  editOverlay.style.display = 'block';
-  editModal.style.display = 'block';
-});
-
-function closeEditPopup() {
-  editOverlay.style.display = 'none';
-  editModal.style.display = 'none';
-  currentRow = null;
-}
-
-if (closeEditModal) closeEditModal.addEventListener('click', closeEditPopup);
-if (cancelEditBtn) cancelEditBtn.addEventListener('click', closeEditPopup);
-if (editOverlay) editOverlay.addEventListener('click', closeEditPopup);
-
-
-document.getElementById('editForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  const ma = editMa.value.trim();
-  const ten = editTen.value.trim();
-  const tacGia = editTacGia.value.trim();
-  const theLoai = editTheLoai.value.trim();
-  const soLuongStr = editSoLuong.value.trim();
-  const soLuongNum = Number(soLuongStr);
-
-  if (!ma || !ten || !tacGia || !theLoai) {
-    alert("⚠ Vui lòng nhập đầy đủ thông tin (Mã/Tên/Tác giả/Thể loại).");
-    return;
+    editModal.style.display = 'block';
+    editOverlay.style.display = 'block';
   }
 
-  if (!Number.isFinite(soLuongNum) || soLuongNum <= 0) {
-    alert("❌ Số lượng phải là số và lớn hơn 0.");
-    return;
+  function closeEditPopup() {
+    editModal.style.display = 'none';
+    editOverlay.style.display = 'none';
+    editForm.reset();
+    currentRow = null;
   }
 
-  if (currentRow) {
-    const cells = currentRow.querySelectorAll('td');
-    if (cells && cells.length >= 5) {
-      cells[0].textContent = ma;
-      cells[1].textContent = ten;
-      cells[2].textContent = tacGia;
-      cells[3].textContent = theLoai;
-      cells[4].textContent = String(soLuongNum);
+  document.querySelectorAll('.edit-icon').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const row = icon.closest('tr');
+      openEditPopup(row);
+    });
+  });
+
+  closeEditModal.addEventListener('click', closeEditPopup);
+  cancelEditBtn.addEventListener('click', closeEditPopup);
+  editOverlay.addEventListener('click', closeEditPopup);
+
+  editForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!currentRow) return;
+
+    const bookId = currentRow.dataset.id;
+    const formData = new FormData();
+
+    formData.append('tenSach', editTen.value.trim());
+    formData.append('tacGia', editTacGia.value.trim());
+    formData.append('namXuatBan', editNamXuatBan.value.trim());
+    formData.append('moTa', editMoTa.value.trim());
+    formData.append('idDanhMuc', editTheLoai.value);
+    formData.append('soLuong', editSoLuong.value.trim());
+    formData.append('vitri', editVitri.value.trim());
+    formData.append('_method', 'PUT');
+    formData.append('_token', document.querySelector('input[name="_token"]').value);
+
+    const editAnhBiaOld = document.querySelector('#editAnhBiaOld');
+
+    if (editAnhBia.files.length > 0) {
+      const file = editAnhBia.files[0];
+      const allowedTypes = ['image/png', 'image/jpeg'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('❌ Ảnh bìa chỉ chấp nhận PNG hoặc JPG');
+        return;
+      }
+      formData.append('anhBia', file);
     } else {
-      console.warn('Dòng đang chỉnh sửa không có đủ cột để cập nhật.');
+      formData.append('anhBiaOld', editAnhBiaOld.value);
     }
-  }
 
-  alert('✅ Đã cập nhật sách thành công!');
-  closeEditPopup();
+    fetch(`/admin/book-management-admin/${bookId}`, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+        'Accept': 'application/json'
+      },
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const cells = currentRow.querySelectorAll('td');
+          cells[1].textContent = editTen.value.trim();
+          cells[2].textContent = editTacGia.value.trim();
+          cells[3].textContent = editNamXuatBan.value.trim();
+          cells[4].textContent = editMoTa.value.trim();
+          cells[5].textContent = editTheLoai.options[editTheLoai.selectedIndex].textContent;
+          cells[5].dataset.id = editTheLoai.value;
+          cells[6].textContent = editSoLuong.value.trim();
+          cells[7].textContent = editVitri.value.trim();
+
+          alert('✅ Cập nhật sách thành công!');
+          closeEditPopup();
+        } else {
+          alert('❌ Cập nhật thất bại: ' + (data.message || 'Lỗi server'));
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('❌ Có lỗi xảy ra khi cập nhật sách.');
+      });
+  });
 });
-

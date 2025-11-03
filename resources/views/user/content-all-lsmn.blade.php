@@ -18,7 +18,7 @@
         </div>
       </a>
     </div>
-  </div>      
+  </div>
 
   <div class="can-giua-group-chon-lenh">
     <div class="group-chon-lenh">
@@ -44,66 +44,69 @@
   <div class="group-ngoai-khoi-sach">
     <div class="group-khoi-sach">
 
+      {{-- Lặp qua tất cả sách mượn --}}
+      @forelse ($muonChiTiets as $chiTiet)
       <div class="khung-chung-sach-lch">
         <div class="khung-anh-sach-lch">
-          <img class="image" src="{{ asset('images/dac-nhan-tam.jpg') }}" alt="Đắc nhân tâm">
+          <img class="image" src="{{ $chiTiet->sach->anhBia ? asset($chiTiet->sach->anhBia) : asset('images/default-book.jpg') }}" alt="{{ $chiTiet->sach->tenSach }}">
         </div>
         <div class="khung-chu-sach-lch">
-          <div class="text-wrapper-7">Ngày mượn: 15/1/2025</div>
-          <div class="text-wrapper-8">Đắc nhân tâm</div>
-          <div class="text-wrapper-9">Tác giả: Dale Carnegie</div>
-          <div class="text-wrapper-10">Hạn trả: 15/2/2025</div>
-          <div class="text-wrapper-11">Ngày trả: 10/2/2025</div>
+          <div class="text-wrapper-7">Ngày mượn: {{ \Carbon\Carbon::parse($chiTiet->borrow_date)->format('d/m/Y') }}</div>
+          <div class="text-wrapper-8">{{ $chiTiet->sach->tenSach }}</div>
+          <div class="text-wrapper-9">Tác giả: {{ $chiTiet->sach->tacGia }}</div>
+
+          <div class="text-wrapper-10">Hạn trả: {{ \Carbon\Carbon::parse($chiTiet->due_date)->format('d/m/Y') }}</div>
+          <div class="text-wrapper-11">Ngày trả: {{ \Carbon\Carbon::parse($chiTiet->return_date)->format('d/m/Y') }}</div>
+          @php
+          $today = \Carbon\Carbon::today();
+          $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
+          $isLate = $today->gt($dueDate);
+          @endphp
+
+          @if($chiTiet->trangThaiCT === 'approved' && $chiTiet->ghiChu === 'return')
+
           <div class="rectangle-8"></div>
           <div class="text-wrapper-12 da-tra">Đã trả</div>
-        </div>
-      </div>
 
-      <div class="khung-chung-sach-lch">
-        <div class="khung-anh-sach-lch">
-          <img class="image" src="{{ asset('images/atomic-habits.jpg') }}" alt="Atomic Habits">
-        </div>
-        <div class="khung-chu-sach-lch">
-          <div class="text-wrapper-7">Ngày mượn: 20/1/2025</div>
-          <div class="text-wrapper-8">Atomic Habits</div>
-          <div class="text-wrapper-9">Tác giả: James Clear</div>
-          <div class="text-wrapper-10">Hạn trả: 20/2/2025</div>
+          @elseif($chiTiet->trangThaiCT === 'approved' && $chiTiet->ghiChu === 'borrow')
           <div class="rectangle-10"></div>
           <div class="text-wrapper-12 dang-muon">Đang mượn</div>
-        </div>
-      </div>
+          @elseif($chiTiet->trangThaiCT === 'pending')
+          <div class="rectangle-9"></div>
+          <div class="text-wrapper-12 cho-duyet">Chờ duyệt</div>
 
-      <div class="khung-chung-sach-lch">
-        <div class="khung-anh-sach-lch">
-          <img class="image" src="{{ asset('images/nha-gia-kim.jpg') }}" alt="Nhà giả kim">
-        </div>
-        <div class="khung-chu-sach-lch">
-          <div class="text-wrapper-7">Ngày mượn: 1/12/2023</div>
-          <div class="text-wrapper-8">Nhà giả kim</div>
-          <div class="text-wrapper-9">Tác giả: Paulo Coelho</div>
-          <div class="text-wrapper-10">Hạn trả: 11/1/2025</div>
-          <div class="text-wrapper-11">Ngày trả: 15/1/2025</div>
+          @endif
+
+          @php
+          $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
+          $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
+
+          $isReturnedLate = (
+          $chiTiet->trangThaiCT === 'approved' &&
+          $chiTiet->ghiChu === 'return' &&
+          $returnDate &&
+          $returnDate->gt($dueDate)
+          );
+
+          $soTienPhat = $chiTiet->phats->sum('soTienPhat');
+          @endphp
+
+          @if($isReturnedLate)
           <div class="rectangle-12"></div>
           <div class="text-wrapper-12 tra-tre">Trả trễ</div>
-          <div class="text-wrapper-13">Phạt: 25.000đ</div>
-        </div>
-      </div>
+          <div class="text-wrapper-13">
+            Phạt: {{ number_format($soTienPhat, 0, ',', '.') }}đ
+          </div>
 
-      <div class="khung-chung-sach-lch">
-        <div class="khung-anh-sach-lch">
-          <img class="image" src="{{ asset('images/luoc-su-loai-nguoi.jpg') }}" alt="Sapiens: Lược sử loài người">
-        </div>
-        <div class="khung-chu-sach-lch">
-          <div class="text-wrapper-7">Ngày mượn: 2/11/2025</div>
-          <p class="text-wrapper-8">Sapiens: Lược sử loài người</p>
-          <p class="text-wrapper-9">Tác giả: Yuval Noah Harari</p>
-          <div class="text-wrapper-10">Hạn trả: 9/12/2025</div>
-          <div class="text-wrapper-11">Ngày trả: 5/12/2025</div>
-          <div class="rectangle-8"></div>
-          <div class="text-wrapper-12 da-tra">Đã trả</div>
+          @endif
+
+
         </div>
       </div>
+      @empty
+      <p>Không có lịch sử mượn trả sách nào.</p>
+      @endforelse
+
 
     </div>
   </div>
-</div>

@@ -30,7 +30,7 @@
   </div>
 
   {{-- Footer --}}
-  @include('user.layouts.footer-signup-successful-user')
+  @include('user.layouts.footer-login-user')
 
 </div>
 
@@ -39,9 +39,11 @@
   document.querySelectorAll('a[href="#"]').forEach(function(link) {
     link.addEventListener('click', function(event) {
       event.preventDefault();
-      alert("⚠️ Bạn cần đăng nhập hoặc đăng ký để sử dụng chức năng này!");
+      alert("⚠️ Bạn cần đăng nhập để sử dụng chức năng này!");
     });
   });
 </script>
+
+
 </body>
 </html>

@@ -11,6 +11,8 @@ body {
   position: relative;
   background: #C86D13;
   overflow: hidden;
+
+  min-width: 1440px;
 }
 
 /* Hero */

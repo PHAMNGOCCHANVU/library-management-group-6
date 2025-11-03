@@ -11,6 +11,7 @@ body {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  min-width: 1440px;
 }
 
 /* main */
@@ -59,7 +60,7 @@ body {
 .help-card {
   width: 270px;              
   height: 210px;               
-  background: white;
+  background: #ffffff;
   text-align: center;
   padding: 30px 20px;
   border-radius: 12px;

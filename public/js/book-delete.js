@@ -1,52 +1,71 @@
-const deleteModal = document.getElementById('deleteModal');
-const modalOverlay = document.querySelector('.modal-overlay'); 
-const cancelDeleteBtn = document.getElementById('deleteCancelBtn');
-const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-const deleteMessage = document.getElementById('deleteMessage');
+document.addEventListener('DOMContentLoaded', () => {
+  const deleteModal = document.getElementById('deleteModal');
+  const deleteCancelBtn = document.getElementById('deleteCancelBtn');
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  const deleteMessage = document.getElementById('deleteMessage');
 
-let rowToDelete = null;
+  let rowToDelete = null;
 
-if (!deleteModal || !modalOverlay || !cancelDeleteBtn || !confirmDeleteBtn || !deleteMessage) {
-  console.warn('Một hoặc nhiều phần tử của delete modal không tồn tại trong DOM.');
-}
+  function openDeleteModal(row) {
+    rowToDelete = row;
+    const bookName = row.querySelectorAll('td')[1].textContent; 
+    deleteMessage.textContent = `Bạn có chắc muốn xóa sách "${bookName}"?`;
+    deleteModal.style.display = 'block';
+  }
 
-document.addEventListener('click', function (e) {
-  const delBtn = e.target.closest('.delete-icon');
-  if (!delBtn) return;
+  function closeDeleteModal() {
+    deleteModal.style.display = 'none';
+    rowToDelete = null;
+  }
 
-  rowToDelete = delBtn.closest('tr');
-  if (!rowToDelete) return;
+  function initDeleteEvents() {
+    document.querySelectorAll('.delete-icon').forEach(icon => {
+      icon.removeEventListener('click', () => { }); 
+      icon.addEventListener('click', () => {
+        const row = icon.closest('tr');
+        openDeleteModal(row);
+      });
+    });
+  }
 
-  const cells = rowToDelete.querySelectorAll('td');
-  const maSach = (cells[0] && cells[0].textContent) ? cells[0].textContent.trim() : '';
-  const tenSach = (cells[1] && cells[1].textContent) ? cells[1].textContent.trim() : '';
+  initDeleteEvents();
 
-  deleteMessage.textContent = `Bạn có chắc muốn xóa sách "${tenSach}" (Mã: ${maSach})?`;
+  deleteCancelBtn.addEventListener('click', closeDeleteModal);
 
-  deleteModal.style.display = 'block';
-  modalOverlay.style.display = 'block';
-});
-
-if (cancelDeleteBtn) {
-  cancelDeleteBtn.addEventListener('click', closeDeleteModal);
-}
-
-if (confirmDeleteBtn) {
   confirmDeleteBtn.addEventListener('click', () => {
-    if (rowToDelete) {
-      rowToDelete.remove();
-      alert('✅ Đã xóa sách thành công.');
-    }
-    closeDeleteModal();
+    if (!rowToDelete) return;
+
+    const bookId = rowToDelete.dataset.id;
+
+    fetch(`/admin/book-management-admin/${bookId}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+        'Accept': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          rowToDelete.remove();
+          alert('✅ ' + data.message);
+        } else {
+          alert('❌ ' + (data.message || 'Không thể xóa sách này.'));
+        }
+        closeDeleteModal();
+      })
+      .catch(err => {
+        console.error(err);
+        alert('❌ Có lỗi xảy ra, vui lòng thử lại.');
+        closeDeleteModal();
+      });
   });
-}
 
-if (modalOverlay) {
-  modalOverlay.addEventListener('click', closeDeleteModal);
-}
+  function updateTableRows() {
+    return document.querySelectorAll('.book-table tbody tr');
+  }
 
-function closeDeleteModal() {
-  if (deleteModal) deleteModal.style.display = 'none';
-  if (modalOverlay) modalOverlay.style.display = 'none';
-  rowToDelete = null;
-}
+  if (typeof updateDashboardStats === 'function') {
+    updateDashboardStats();
+  }
+});

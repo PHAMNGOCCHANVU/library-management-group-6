@@ -34,6 +34,7 @@
 }
 .trang-lch-s-mn-tr .rectangle-23 {
     background: linear-gradient(90deg, #5141FF, #B951FE, #F82FFF);
+    border-color: #ffdddd;
 }
 .trang-lch-s-mn-tr .rectangle-23:hover {
     background: linear-gradient(90deg, #412fff, #ad32ff, #f700ff);

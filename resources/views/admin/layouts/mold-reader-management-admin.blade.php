@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý độc giả - Reader Management</title>
+  <title>@yield('title', 'Quản lý độc giả')</title>
+  <link rel="stylesheet" href="{{ asset('css/category-management-admin.css') }}">
+
   <link rel="stylesheet" href="{{ asset('css/mold-dashboard-admin.css') }}">
   <link rel="stylesheet" href="{{ asset('css/reader-management-admin.css') }}">
 </head>
+
 <body>
   <div class="container">
     <!-- Thanh Menu -->
@@ -60,3 +64,13 @@
           <a href="{{ url('/admin/homepage-admin') }}" class="home">Trang chủ</a>
         </div>
       </header>
+
+      <!-- Nội dung động -->
+      @yield('content')
+    </main>
+  </div>
+
+  @yield('scripts')
+</body>
+
+</html>

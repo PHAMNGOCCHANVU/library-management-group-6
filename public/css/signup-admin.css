@@ -11,6 +11,7 @@ body {
   position: relative;
   background: #FFE8D4;
   overflow: hidden;
+  min-width: 1440px;
 }
 
 /* ======== Sign in admin ======== */

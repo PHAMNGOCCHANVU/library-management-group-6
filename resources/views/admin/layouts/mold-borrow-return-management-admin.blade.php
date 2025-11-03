@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quản lý mượn/ trả - Borrow Return Management</title>
   <link rel="stylesheet" href="{{ asset('css/mold-dashboard-admin.css') }}">
   <link rel="stylesheet" href="{{ asset('css/borrow-return-management-admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/finemoney-management-admin.css') }}">
+
 </head>
+
 <body>
   <div class="container">
     <!-- Thanh Menu -->
@@ -15,9 +19,9 @@
       <!-- Logo Admin -->
       <div class="sidebar-title">
         <div class="avatar">
-             <div class="avatar-icon">
-                <img src="{{ asset('images/iconstack.io - (User Lock 01)-admin.png') }}" alt="Quản trị viên logo" />
-             </div>
+          <div class="avatar-icon">
+            <img src="{{ asset('images/iconstack.io - (User Lock 01)-admin.png') }}" alt="Quản trị viên logo" />
+          </div>
         </div>
         <span class="sidebar-text">Quản trị viên</span>
       </div>
@@ -58,7 +62,7 @@
           <span class="admin">
             <img src="{{ asset('images/icon-group-admin-greyblack.png') }}" alt="Admin icon"> Quản trị viên
           </span>
-          
+
           <a href="{{ url('/admin/homepage-admin') }}" class="home">Trang chủ</a>
         </div>
       </header>
