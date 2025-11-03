@@ -98,11 +98,9 @@
                         <div class="text-wrapper-12 da-tra">Đã trả</div>
 
                         @php
-                        use Carbon\Carbon;
-                        
-                        $returnDate = now();
-                        $dueDate = Carbon::parse($chiTiet->due_date);
-                        $borrowDate = Carbon::parse($chiTiet->borrow_date);
+                        $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
+                        $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
+                        $borrowDate = \Carbon\Carbon::parse($chiTiet->borrow_date);
 
                         $soNgayTre = ceil($dueDate->diffInHours($returnDate) / 24);
                         $soTienPhat = $soNgayTre * 5000;

@@ -78,8 +78,6 @@
           @endif
 
           @php
-          use Carbon\Carbon;
-          
           $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
           $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
 
@@ -93,7 +91,6 @@
           $soNgayTre = ceil($dueDate->diffInHours($returnDate) / 24);
           $soTienPhat = $soNgayTre * 5000;
           @endphp
-
 
           @if($isReturnedLate)
           <div class="rectangle-12"></div>

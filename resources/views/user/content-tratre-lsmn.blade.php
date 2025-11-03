@@ -82,8 +82,6 @@
 
                 @forelse ($muonChiTiets as $chiTiet)
                 @php
-                use Carbon\Carbon;
-                
                 $dueDate = \Carbon\Carbon::parse($chiTiet->due_date);
                 $returnDate = $chiTiet->return_date ? \Carbon\Carbon::parse($chiTiet->return_date) : null;
 
@@ -94,7 +92,7 @@
                 $returnDate->gt($dueDate)
                 );
 
-                $soNgayTre = ceil($dueDate->diffInHours($returnDate) / 24);
+                $soNgayTre = $isReturnedLate ? ceil($dueDate->diffInHours($returnDate) / 24) : 0;
                 $soTienPhat = $soNgayTre * 5000;
                 @endphp
 
